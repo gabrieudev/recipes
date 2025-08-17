@@ -13,4 +13,5 @@ public interface IngredientOutputPort {
     Optional<Ingredient> findById(UUID id);
     List<Ingredient> findAll(String name, Integer page, Integer size);
     boolean existsById(UUID id);
+    boolean existsByName(String name);
 }

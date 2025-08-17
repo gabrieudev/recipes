@@ -13,4 +13,5 @@ public interface CategoryOutputPort {
     Optional<Category> findById(UUID id);
     List<Category> findAll(String name, Integer page, Integer size);
     boolean existsById(UUID id);
+    boolean existsByName(String name);
 }

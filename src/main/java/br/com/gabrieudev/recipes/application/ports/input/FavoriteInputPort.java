@@ -7,7 +7,6 @@ import br.com.gabrieudev.recipes.domain.Favorite;
 
 public interface FavoriteInputPort {
     Favorite create(Favorite favorite);
-    Favorite update(Favorite favorite);
     void delete(UUID id);
     Favorite findById(UUID id);
     List<Favorite> findAll(UUID userId, Integer page, Integer size);

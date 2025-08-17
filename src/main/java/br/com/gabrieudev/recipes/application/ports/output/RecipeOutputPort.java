@@ -15,4 +15,5 @@ public interface RecipeOutputPort {
     List<Recipe> findAll(UUID userId, String title, Integer cookTimeMinutes, Integer servings, UUID categoryId);
     boolean existsById(UUID id);
     boolean existsByCategoryId(UUID id);
+    boolean existsByTitle(String title);
 }
