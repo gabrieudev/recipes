@@ -7,7 +7,6 @@ public class Recipe {
     private UUID id;
     private String title;
     private String instructions;
-    private Integer prepTimeMinutes;
     private Integer cookTimeMinutes;
     private Integer servings;
     private String imageUrl;
@@ -31,12 +30,6 @@ public class Recipe {
     }
     public void setInstructions(String instructions) {
       this.instructions = instructions;
-    }
-    public Integer getPrepTimeMinutes() {
-      return prepTimeMinutes;
-    }
-    public void setPrepTimeMinutes(Integer prepTimeMinutes) {
-      this.prepTimeMinutes = prepTimeMinutes;
     }
     public Integer getCookTimeMinutes() {
       return cookTimeMinutes;
@@ -69,12 +62,11 @@ public class Recipe {
       this.createdAt = createdAt;
     }
 
-    public Recipe(UUID id, String title, String instructions, Integer prepTimeMinutes, Integer cookTimeMinutes,
+    public Recipe(UUID id, String title, String instructions, Integer cookTimeMinutes,
     Integer servings, String imageUrl, Category category, LocalDateTime createdAt) {
       this.id = id;
       this.title = title;
       this.instructions = instructions;
-      this.prepTimeMinutes = prepTimeMinutes;
       this.cookTimeMinutes = cookTimeMinutes;
       this.servings = servings;
       this.imageUrl = imageUrl;

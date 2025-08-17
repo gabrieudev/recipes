@@ -36,9 +36,6 @@ public class JpaRecipeEntity {
     @Column(name = "instructions", nullable = false)
     private String instructions;
     
-    @Column(name = "prep_time_minutes", nullable = false)
-    private Integer prepTimeMinutes;
-    
     @Column(name = "cook_time_minutes", nullable = false)
     private Integer cookTimeMinutes;
     
