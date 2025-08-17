@@ -23,4 +23,6 @@ public interface JpaIngredientRepository extends JpaRepository<JpaIngredientEnti
         nativeQuery = true
     )
     Page<JpaIngredientEntity> findAll(@Param("p1") String name, Pageable pageable);
+
+    boolean existsByName(String name);
 }

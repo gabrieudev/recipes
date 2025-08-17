@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.com.gabrieudev.recipes.adapters.output.persistence.entities.JpaFavoriteEntity;
+import br.com.gabrieudev.recipes.adapters.output.persistence.entities.JpaRecipeEntity;
+import br.com.gabrieudev.recipes.adapters.output.persistence.entities.JpaUserEntity;
 
 @Repository
 public interface JpaFavoriteRepository extends JpaRepository<JpaFavoriteEntity, UUID> {
@@ -22,4 +24,6 @@ public interface JpaFavoriteRepository extends JpaRepository<JpaFavoriteEntity, 
         nativeQuery = true
     )
     Page<JpaFavoriteEntity> findAll(@Param("p1") UUID userId, Pageable pageable);
+
+    boolean existsByUserAndRecipe(JpaUserEntity user, JpaRecipeEntity recipe);
 }

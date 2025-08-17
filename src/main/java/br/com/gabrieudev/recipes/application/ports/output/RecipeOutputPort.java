@@ -12,7 +12,7 @@ public interface RecipeOutputPort {
     Optional<Recipe> update(Recipe recipe);
     boolean delete(UUID id);
     Optional<Recipe> findById(UUID id);
-    List<Recipe> findAll(UUID userId, String title, Integer cookTimeMinutes, Integer servings, UUID categoryId);
+    List<Recipe> findAll(UUID userId, String title, Integer cookTimeMinutes, Integer servings, UUID categoryId, Integer page, Integer size);
     boolean existsById(UUID id);
     boolean existsByCategoryId(UUID id);
     boolean existsByTitle(String title);

@@ -23,4 +23,6 @@ public interface JpaCategoryRepository extends JpaRepository<JpaCategoryEntity, 
         nativeQuery = true
     )
     Page<JpaCategoryEntity> findAll(@Param("p1") String name, Pageable pageable);
+
+    boolean existsByName(String name);
 }

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import br.com.gabrieudev.recipes.adapters.output.persistence.entities.JpaCategoryEntity;
 import br.com.gabrieudev.recipes.adapters.output.persistence.entities.JpaRecipeEntity;
 
 @Repository
@@ -38,4 +39,8 @@ public interface JpaRecipeRepository extends JpaRepository<JpaRecipeEntity, UUID
         @Param("p5") Integer servings, 
         Pageable pageable
     );
+
+    boolean existsByCategory(JpaCategoryEntity category);
+
+    boolean existsByTitle(String title);
 }
