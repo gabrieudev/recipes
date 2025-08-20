@@ -5,14 +5,12 @@ import java.util.List;
 import java.util.UUID;
 
 import br.com.gabrieudev.recipes.application.exceptions.AlreadyExistsException;
-import br.com.gabrieudev.recipes.application.exceptions.EmailException;
 import br.com.gabrieudev.recipes.application.exceptions.InternalErrorException;
 import br.com.gabrieudev.recipes.application.exceptions.InvalidTokenException;
 import br.com.gabrieudev.recipes.application.exceptions.NotFoundException;
 import br.com.gabrieudev.recipes.application.ports.input.UserInputPort;
 import br.com.gabrieudev.recipes.application.ports.output.AuthOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.CacheOutputPort;
-import br.com.gabrieudev.recipes.application.ports.output.EmailOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.EnvironmentOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.RoleOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.UserOutputPort;
@@ -25,18 +23,18 @@ public class UserService implements UserInputPort {
     private final UserOutputPort userOutputPort;
     private final RoleOutputPort roleOutputPort;
     private final UserRoleOutputPort userRoleOutputPort;
-    private final EmailOutputPort emailOutputPort;
+    // private final EmailOutputPort emailOutputPort;
     private final AuthOutputPort authOutputPort;
     private final CacheOutputPort cacheOutputPort;
     private final EnvironmentOutputPort environmentOutputPort;
 
     public UserService(UserOutputPort userOutputPort, RoleOutputPort roleOutputPort,
-            UserRoleOutputPort userRoleOutputPort, EmailOutputPort emailOutputPort, AuthOutputPort authOutputPort,
+            UserRoleOutputPort userRoleOutputPort, AuthOutputPort authOutputPort,
             CacheOutputPort cacheOutputPort, EnvironmentOutputPort environmentOutputPort) {
         this.userOutputPort = userOutputPort;
         this.roleOutputPort = roleOutputPort;
         this.userRoleOutputPort = userRoleOutputPort;
-        this.emailOutputPort = emailOutputPort;
+        // this.emailOutputPort = emailOutputPort;
         this.authOutputPort = authOutputPort;
         this.cacheOutputPort = cacheOutputPort;
         this.environmentOutputPort = environmentOutputPort;
@@ -51,7 +49,7 @@ public class UserService implements UserInputPort {
         user.setPassword(userOutputPort.hashPassword(user.getPassword()));
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
-        user.setIsActive(Boolean.FALSE);
+        user.setIsActive(Boolean.TRUE);
 
         User createdUser = userOutputPort.create(user)
                 .orElseThrow(() -> new InternalErrorException("Erro ao criar usuário."));
@@ -62,7 +60,7 @@ public class UserService implements UserInputPort {
         userRoleOutputPort.create(new UserRole(null, createdUser, role))
                 .orElseThrow(() -> new InternalErrorException("Erro ao criar usuário."));
 
-        sendConfirmationEmail(createdUser.getId());
+        // sendConfirmationEmail(createdUser.getId());
 
         return createdUser;
     }
@@ -119,10 +117,10 @@ public class UserService implements UserInputPort {
 
         cacheOutputPort.delete("code:" + code.toString());
 
-        emailOutputPort.sendEmail(
-                user.getEmail(),
-                "Confirmação de e-mail",
-                "Seu e-mail foi confirmado com sucesso.");
+        // emailOutputPort.sendEmail(
+        //         user.getEmail(),
+        //         "Confirmação de e-mail",
+        //         "Seu e-mail foi confirmado com sucesso.");
     }
 
     @Override
@@ -141,11 +139,11 @@ public class UserService implements UserInputPort {
         String emailMessage = String.format("Olá %s, clique no link abaixo para confirmar seu e-mail: %s",
                 user.getFirstName(), url);
 
-        boolean isSent = emailOutputPort.sendEmail(user.getEmail(), "Confirmação de e-mail", emailMessage);
+        // boolean isSent = emailOutputPort.sendEmail(user.getEmail(), "Confirmação de e-mail", emailMessage);
 
-        if (!isSent) {
-            throw new EmailException("Erro ao enviar e-mail de confirmação.");
-        }
+        // if (!isSent) {
+        //     throw new EmailException("Erro ao enviar e-mail de confirmação.");
+        // }
     }
 
     @Override
@@ -182,11 +180,11 @@ public class UserService implements UserInputPort {
         String emailMessage = String.format("Olá %s, clique no link abaixo para redefinir sua senha: %s",
                 user.getFirstName(), url);
 
-        boolean isSent = emailOutputPort.sendEmail(user.getEmail(), "Redefinir senha", emailMessage);
+        // boolean isSent = emailOutputPort.sendEmail(user.getEmail(), "Redefinir senha", emailMessage);
 
-        if (!isSent) {
-            throw new EmailException("Erro ao enviar e-mail de redefinição de senha.");
-        }
+        // if (!isSent) {
+        //     throw new EmailException("Erro ao enviar e-mail de redefinição de senha.");
+        // }
     }
 
     @Override
@@ -203,9 +201,9 @@ public class UserService implements UserInputPort {
         
         cacheOutputPort.delete("code:" + code.toString());
 
-        emailOutputPort.sendEmail(
-                user.getEmail(),
-                "Redefinição de senha",
-                "Sua senha foi redefinida com sucesso.");
+        // emailOutputPort.sendEmail(
+        //         user.getEmail(),
+        //         "Redefinição de senha",
+        //         "Sua senha foi redefinida com sucesso.");
     }
 }

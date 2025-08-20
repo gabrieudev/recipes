@@ -39,8 +39,8 @@ public class RecipeService implements RecipeinputPort {
     }
 
     @Override
-    public List<Recipe> findAll(UUID userId, String title, Integer cookTimeMinutes, Integer servings, UUID categoryId) {
-        return recipeOutputPort.findAll(userId, title, cookTimeMinutes, servings, categoryId);
+    public List<Recipe> findAll(UUID userId, String title, Integer cookTimeMinutes, Integer servings, UUID categoryId, Integer page, Integer size) {
+        return recipeOutputPort.findAll(userId, title, cookTimeMinutes, servings, categoryId, page, size);
     }
 
     @Override

@@ -7,6 +7,7 @@ import br.com.gabrieudev.recipes.application.ports.input.AuthInputPort;
 import br.com.gabrieudev.recipes.application.ports.input.CategoryInputPort;
 import br.com.gabrieudev.recipes.application.ports.input.FavoriteInputPort;
 import br.com.gabrieudev.recipes.application.ports.input.IngredientInputPort;
+import br.com.gabrieudev.recipes.application.ports.input.RecipeIngredientInputPort;
 import br.com.gabrieudev.recipes.application.ports.input.RecipeinputPort;
 import br.com.gabrieudev.recipes.application.ports.input.RoleInputPort;
 import br.com.gabrieudev.recipes.application.ports.input.UserInputPort;
@@ -14,10 +15,10 @@ import br.com.gabrieudev.recipes.application.ports.input.UserRoleInputPort;
 import br.com.gabrieudev.recipes.application.ports.output.AuthOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.CacheOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.CategoryOutputPort;
-import br.com.gabrieudev.recipes.application.ports.output.EmailOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.EnvironmentOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.FavoriteOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.IngredientOutputPort;
+import br.com.gabrieudev.recipes.application.ports.output.RecipeIngredientOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.RecipeOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.RoleOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.UserOutputPort;
@@ -26,6 +27,7 @@ import br.com.gabrieudev.recipes.application.services.AuthService;
 import br.com.gabrieudev.recipes.application.services.CategoryService;
 import br.com.gabrieudev.recipes.application.services.FavoriteService;
 import br.com.gabrieudev.recipes.application.services.IngredientService;
+import br.com.gabrieudev.recipes.application.services.RecipeIngredientService;
 import br.com.gabrieudev.recipes.application.services.RecipeService;
 import br.com.gabrieudev.recipes.application.services.RoleService;
 import br.com.gabrieudev.recipes.application.services.UserRoleService;
@@ -34,13 +36,13 @@ import br.com.gabrieudev.recipes.application.services.UserService;
 @Configuration
 public class BeansConfig {
     @Bean
-    UserService userService(UserOutputPort userOutputPort, RoleOutputPort roleOutputPort, UserRoleOutputPort userRoleOutputPort, EmailOutputPort emailOutputPort, AuthOutputPort authOutputPort, CacheOutputPort cacheOutputPort, EnvironmentOutputPort environmentOutputPort) {
-        return new UserService(userOutputPort, roleOutputPort, userRoleOutputPort, emailOutputPort, authOutputPort, cacheOutputPort, environmentOutputPort);
+    UserService userService(UserOutputPort userOutputPort, RoleOutputPort roleOutputPort, UserRoleOutputPort userRoleOutputPort, AuthOutputPort authOutputPort, CacheOutputPort cacheOutputPort, EnvironmentOutputPort environmentOutputPort) {
+        return new UserService(userOutputPort, roleOutputPort, userRoleOutputPort, authOutputPort, cacheOutputPort, environmentOutputPort);
     }
 
     @Bean
-    UserInputPort userInputPort(UserOutputPort userOutputPort, RoleOutputPort roleOutputPort, UserRoleOutputPort userRoleOutputPort, EmailOutputPort emailOutputPort, AuthOutputPort authOutputPort, CacheOutputPort cacheOutputPort, EnvironmentOutputPort environmentOutputPort) {
-        return new UserService(userOutputPort, roleOutputPort, userRoleOutputPort, emailOutputPort, authOutputPort, cacheOutputPort, environmentOutputPort);
+    UserInputPort userInputPort(UserOutputPort userOutputPort, RoleOutputPort roleOutputPort, UserRoleOutputPort userRoleOutputPort, AuthOutputPort authOutputPort, CacheOutputPort cacheOutputPort, EnvironmentOutputPort environmentOutputPort) {
+        return new UserService(userOutputPort, roleOutputPort, userRoleOutputPort, authOutputPort, cacheOutputPort, environmentOutputPort);
     }
 
     @Bean
@@ -111,5 +113,15 @@ public class BeansConfig {
     @Bean
     RecipeinputPort recipeInputPort(RecipeOutputPort recipeOutputPort) {
         return new RecipeService(recipeOutputPort);
+    }
+
+    @Bean
+    RecipeIngredientService recipeIngredientService(RecipeIngredientOutputPort recipeIngredientOutputPort) {
+        return new RecipeIngredientService(recipeIngredientOutputPort);
+    }
+
+    @Bean
+    RecipeIngredientInputPort recipeIngredientInputPort(RecipeIngredientOutputPort recipeIngredientOutputPort) {
+        return new RecipeIngredientService(recipeIngredientOutputPort);
     }
 }

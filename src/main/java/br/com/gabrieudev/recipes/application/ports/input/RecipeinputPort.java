@@ -10,5 +10,5 @@ public interface RecipeinputPort {
     Recipe update(Recipe recipe);
     void delete(UUID id);
     Recipe findById(UUID id);
-    List<Recipe> findAll(UUID userId, String title, Integer cookTimeMinutes, Integer servings, UUID categoryId);
+    List<Recipe> findAll(UUID userId, String title, Integer cookTimeMinutes, Integer servings, UUID categoryId, Integer page, Integer size);
 }

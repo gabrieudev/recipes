@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(of = "id")
-@Table(name = "categories")
+@Table(name = "favorites")
 public class JpaFavoriteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
