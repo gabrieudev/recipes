@@ -1,8 +1,10 @@
 package br.com.gabrieudev.recipes.adapters.output.persistence.repositories;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import br.com.gabrieudev.recipes.adapters.output.persistence.entities.JpaIngredientEntity;
@@ -39,9 +41,9 @@ public class RecipeIngredientRepositoryAdapter implements RecipeIngredientOutput
     }
 
     @Override
-    public boolean delete(RecipeIngredient recipeIngredient) {
+    public boolean delete(UUID id) {
         try {
-            jpaRecipeIngredientRepository.delete(JpaRecipeIngredientEntity.fromDomainObj(recipeIngredient));
+            jpaRecipeIngredientRepository.deleteById(id);
             return true;
         } catch (Exception e) {
             return false;
@@ -82,5 +84,13 @@ public class RecipeIngredientRepositoryAdapter implements RecipeIngredientOutput
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public List<RecipeIngredient> findAll(UUID recipeId, UUID ingredientId, Integer page, Integer size) {
+        return jpaRecipeIngredientRepository.findAll(recipeId, ingredientId, PageRequest.of(page, size))
+                .stream()
+                .map(JpaRecipeIngredientEntity::toDomainObj)
+                .toList();
     }
 }

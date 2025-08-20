@@ -106,13 +106,13 @@ public class BeansConfig {
     }
 
     @Bean
-    RecipeService recipeService(RecipeOutputPort recipeOutputPort) {
-        return new RecipeService(recipeOutputPort);
+    RecipeService recipeService(RecipeOutputPort recipeOutputPort, RecipeIngredientOutputPort recipeIngredientOutputPort) {
+        return new RecipeService(recipeOutputPort, recipeIngredientOutputPort);
     }
 
     @Bean
-    RecipeinputPort recipeInputPort(RecipeOutputPort recipeOutputPort) {
-        return new RecipeService(recipeOutputPort);
+    RecipeinputPort recipeInputPort(RecipeOutputPort recipeOutputPort, RecipeIngredientOutputPort recipeIngredientOutputPort) {
+        return new RecipeService(recipeOutputPort, recipeIngredientOutputPort);
     }
 
     @Bean

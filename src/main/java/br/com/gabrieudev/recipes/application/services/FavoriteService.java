@@ -1,5 +1,6 @@
 package br.com.gabrieudev.recipes.application.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +22,8 @@ public class FavoriteService implements FavoriteInputPort {
         if (favoriteOutputPort.existsByUserIdAndRecipeId(favorite.getUser().getId(), favorite.getRecipe().getId())) {
             throw new InternalErrorException("Receita já favoritada.");
         }
+
+        favorite.setFavoritedAt(LocalDateTime.now());
 
         return favoriteOutputPort.create(favorite)
             .orElseThrow(() -> new InternalErrorException("Erro ao favoritar receita."));

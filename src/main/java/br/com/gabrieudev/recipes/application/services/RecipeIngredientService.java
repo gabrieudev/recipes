@@ -1,5 +1,6 @@
 package br.com.gabrieudev.recipes.application.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import br.com.gabrieudev.recipes.application.exceptions.AlreadyExistsException;
@@ -26,12 +27,12 @@ public class RecipeIngredientService implements RecipeIngredientInputPort {
     }
 
     @Override
-    public void delete(RecipeIngredient recipeIngredient) {
-        if (!recipeIngredientOutputPort.existsById(recipeIngredient.getId())) {
+    public void delete(UUID id) {
+        if (!recipeIngredientOutputPort.existsById(id)) {
             throw new InternalErrorException("Ingrediente para receita não encontrado.");
         }
 
-        if (!recipeIngredientOutputPort.delete(recipeIngredient)) {
+        if (!recipeIngredientOutputPort.delete(id)) {
             throw new InternalErrorException("Erro ao deletar ingrediente para receita.");
         }
     }
@@ -46,5 +47,10 @@ public class RecipeIngredientService implements RecipeIngredientInputPort {
     public RecipeIngredient update(RecipeIngredient recipeIngredient) {
         return recipeIngredientOutputPort.update(recipeIngredient)
                 .orElseThrow(() -> new InternalErrorException("Erro ao atualizar ingrediente para receita."));
+    }
+
+    @Override
+    public List<RecipeIngredient> findAll(UUID recipeId, UUID ingredientId, Integer page, Integer size) {
+        return recipeIngredientOutputPort.findAll(recipeId, ingredientId, page, size);
     }
 }

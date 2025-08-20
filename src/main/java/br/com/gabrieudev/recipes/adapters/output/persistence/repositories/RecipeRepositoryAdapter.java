@@ -67,8 +67,8 @@ public class RecipeRepositoryAdapter implements RecipeOutputPort {
     }
 
     @Override
-    public List<Recipe> findAll(UUID userId, String title, Integer cookTimeMinutes, Integer servings, UUID categoryId, Integer page, Integer size) {
-        return jpaRecipeRepository.findAll(userId, categoryId, title, cookTimeMinutes, servings, PageRequest.of(page, size))
+    public List<Recipe> findAll(String title, Integer cookTimeMinutes, Integer servings, UUID categoryId, Integer page, Integer size) {
+        return jpaRecipeRepository.findAll(categoryId, title, cookTimeMinutes, servings, PageRequest.of(page, size))
                 .stream()
                 .map(JpaRecipeEntity::toDomainObj)
                 .toList();

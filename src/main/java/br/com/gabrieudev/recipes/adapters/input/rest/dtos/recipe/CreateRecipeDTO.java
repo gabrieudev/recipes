@@ -5,7 +5,6 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 
 import br.com.gabrieudev.recipes.adapters.input.rest.dtos.category.CategoryDTO;
-import br.com.gabrieudev.recipes.adapters.input.rest.dtos.recipeingredient.CreateRecipeIngredientDTO;
 import br.com.gabrieudev.recipes.domain.Recipe;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -52,7 +51,7 @@ public class CreateRecipeDTO {
 
     private CategoryDTO category;
 
-    private List<CreateRecipeIngredientDTO> ingredients;
+    private List<IngredientsDTO> ingredients;
     
     public Recipe toDomainObj() {
         return new ModelMapper().map(this, Recipe.class);

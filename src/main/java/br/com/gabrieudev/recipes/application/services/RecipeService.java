@@ -1,5 +1,6 @@
 package br.com.gabrieudev.recipes.application.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -7,24 +8,38 @@ import br.com.gabrieudev.recipes.application.exceptions.AlreadyExistsException;
 import br.com.gabrieudev.recipes.application.exceptions.InternalErrorException;
 import br.com.gabrieudev.recipes.application.exceptions.NotFoundException;
 import br.com.gabrieudev.recipes.application.ports.input.RecipeinputPort;
+import br.com.gabrieudev.recipes.application.ports.output.RecipeIngredientOutputPort;
 import br.com.gabrieudev.recipes.application.ports.output.RecipeOutputPort;
 import br.com.gabrieudev.recipes.domain.Recipe;
+import br.com.gabrieudev.recipes.domain.RecipeIngredient;
 
 public class RecipeService implements RecipeinputPort {
     private final RecipeOutputPort recipeOutputPort;
+    private final RecipeIngredientOutputPort recipeIngredientOutputPort;
 
-    public RecipeService(RecipeOutputPort recipeOutputPort) {
+    public RecipeService(RecipeOutputPort recipeOutputPort, RecipeIngredientOutputPort recipeIngredientOutputPort) {
         this.recipeOutputPort = recipeOutputPort;
+        this.recipeIngredientOutputPort = recipeIngredientOutputPort;
     }
 
     @Override
-    public Recipe create(Recipe recipe) {
+    public Recipe create(Recipe recipe, List<RecipeIngredient> recipeIngredients) {
         if (recipeOutputPort.existsByTitle(recipe.getTitle())) {
             throw new AlreadyExistsException("Já existe uma receita com esse título.");
         }
 
-        return recipeOutputPort.create(recipe)
+        recipe.setCreatedAt(LocalDateTime.now());
+
+        Recipe createdRecipe = recipeOutputPort.create(recipe)
             .orElseThrow(() -> new InternalErrorException("Erro ao criar receita."));
+
+        recipeIngredients.forEach(ri -> {
+            ri.setRecipe(createdRecipe);
+            recipeIngredientOutputPort.create(ri)
+                .orElseThrow(() -> new InternalErrorException("Erro ao criar ingrediente para receita."));
+        });
+
+        return createdRecipe;
     }
 
     @Override
@@ -39,8 +54,8 @@ public class RecipeService implements RecipeinputPort {
     }
 
     @Override
-    public List<Recipe> findAll(UUID userId, String title, Integer cookTimeMinutes, Integer servings, UUID categoryId, Integer page, Integer size) {
-        return recipeOutputPort.findAll(userId, title, cookTimeMinutes, servings, categoryId, page, size);
+    public List<Recipe> findAll(String title, Integer cookTimeMinutes, Integer servings, UUID categoryId, Integer page, Integer size) {
+        return recipeOutputPort.findAll(title, cookTimeMinutes, servings, categoryId, page, size);
     }
 
     @Override
